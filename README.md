@@ -2,7 +2,7 @@
 The baseline system provided for the MM 2025 MPDD Challenge serves as a starting point for participants to develop their solutions for the Multimodal Personalized Depression Detection tasks. The baseline system is designed to be straightforward yet effective, providing participants with a solid foundation upon which they can build and improve.
 
 # Results
-The metrics reported are weighted/unweighted F1-score(W_F1/U_F1) and weighted/unweighted accuracy (W_Acc./U_Acc.) with and without personalized features (PF) for the MPDD-Young and MPDD-Elderly datasets. Each value represents the best-performing feature combination for each experiment, using default hyper-parameters.
+The metrics reported are weighted/unweighted F1-score (W_F1/U_F1) and weighted/unweighted accuracy (W_Acc./U_Acc.) with and without personalized features (PF) for the MPDD-Young and MPDD-Elderly datasets. Each value represents the best-performing feature combination for each experiment, using default hyper-parameters.
 
 #### MPDD-Elderly (Track1)
 
@@ -27,10 +27,10 @@ The metrics reported are weighted/unweighted F1-score(W_F1/U_F1) and weighted/un
 
 # Environment
 
-    python >= 3.10.0
-    pytorch 
-    scikit-learn 
-    pandas
+    python 3.10.0
+    pytorch 2.3.0
+    scikit-learn 1.5.2
+    pandas 2.2.3
 
 Given `requirements.txt`, we recommend users to configure their environment via conda with the following steps:
 
@@ -51,7 +51,7 @@ The link of the pre-trained model is: [wav2vec model](https://github.com/faceboo
 **OpenSmile：** We extract utterance-level acoustic features using opensmile. The embedding size of OpenSMILE features is 6373.  
 
 ### Visual Feature:
-**Resnet-50 and Densenet-121：** We employ OpenCV tool to extract scene pictures from each video, capturing frames at a 10-frame interval. Subsequently, we utilize the Resnet-50 and Densenet-121 model to generate utterance-level features for the extracted scene pictures in the videos. The embedding size of the visual features is 1000 for Resnet and 1024 for Densenet.
+**Resnet-50 and Densenet-121：** We employ OpenCV tool to extract scene pictures from each video, capturing frames at a 10-frame interval. Subsequently, we utilize the Resnet-50 and Densenet-121 model to generate utterance-level features for the extracted scene pictures in the videos. The embedding size of the visual features is 1000 for Resnet, and 1024 (Track1) or 1000 (Track2) for Densenet.
 The links of the pre-trained models are:  
  [ResNet-50](https://huggingface.co/microsoft/resnet-50)  
  [DenseNet-121](https://huggingface.co/pytorch/vision/v0.10.0/densenet121)  
@@ -116,15 +116,15 @@ bash scripts/Track2/train_1s_binary.sh --audiofeature_method=wav2vec --videofeat
 Refer to `config.json` for more parameters.
 
 The specific dimensions of each feature are shown in the table below:
-| Feature                  | Dimension |
-|--------------------------|-----------|
-| Wav2vec                 | 512       |
-| MFCCs                   | 64        |
-| OpenSmile               | 6373      |
-| ResNet-50               | 1000      |
-| DenseNet-121            | 1024      |
-| OpenFace                | 709       |
-| Personalized Feature    | 1024      |
+| Feature                  | Dimension                       |
+|--------------------------|---------------------------------|
+| Wav2vec                 | 512                              |
+| MFCCs                   | 64                               |
+| OpenSmile               | 6373                             |
+| ResNet-50               | 1000                             |
+| DenseNet-121            | 1024 for Track1, 1000 for Track2 |
+| OpenFace                | 709                              |
+| Personalized Feature    | 1024                             |
 
 
 ## Testing

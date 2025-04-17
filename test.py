@@ -106,8 +106,8 @@ if __name__ == '__main__':
     test_loader = DataLoader(
         AudioVisualDataset(test_data, args.labelcount, args.personalized_features_file, opt.feature_max_len,
                            batch_size=args.batch_size,
-                           audio_path=audio_path, video_path=video_path, 
-                           isTest=True), batch_size=args.batch_size, shuffle=False)
+                           audio_path=audio_path, video_path=video_path
+                           ), batch_size=args.batch_size, shuffle=False)
     logger.info('The number of testing samples = %d' % len(test_loader.dataset))
 
     # testing
