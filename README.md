@@ -29,8 +29,8 @@ The metrics reported are weighted/unweighted F1-score (W_F1/U_F1) and weighted/u
 
     python 3.10.0
     pytorch 2.3.0
-    scikit-learn 1.5.2
-    pandas 2.2.3
+    scikit-learn 1.5.1
+    pandas 2.2.2
 
 Given `requirements.txt`, we recommend users to configure their environment via conda with the following steps:
 
