@@ -100,13 +100,13 @@ if __name__ == '__main__':
 
 
     model = ourModel(opt)
-    model.load_state_dict(torch.load(args.train_model))
+    model.load_state_dict(torch.load(args.train_model, map_location=torch.device(args.device)))
     model.to(args.device)
     test_data = json.load(open(args.test_json, 'r'))
     test_loader = DataLoader(
         AudioVisualDataset(test_data, args.labelcount, args.personalized_features_file, opt.feature_max_len,
                            batch_size=args.batch_size,
-                           audio_path=audio_path, video_path=video_path), batch_size=args.batch_size, shuffle=False)
+                           audio_path=audio_path, video_path=video_path,isTest=True), batch_size=args.batch_size, shuffle=False)
     logger.info('The number of testing samples = %d' % len(test_loader.dataset))
 
     # testing
@@ -133,11 +133,8 @@ if __name__ == '__main__':
     csv_file = f"{result_dir}/submission.csv"
 
     # Get the order of the IDs in the test data to ensure consistency
-    if args.track_option=='Track1':
-        test_ids = [item["audio_feature_path"].split('_')[0] + '_' + item["audio_feature_path"].split('_')[2] for item in test_data]
-    elif args.track_option=='Track2':
-        test_ids = ['_'.join([part.lstrip('0') for part in item["audio_feature_path"].replace(".npy", "").split('_')]) for item in test_data]
-
+    test_ids = [np.int64(item["audio_feature_path"].split('_')[0])for item in test_data]
+    
     if os.path.exists(csv_file):
         df = pd.read_csv(csv_file)
     else:
