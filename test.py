@@ -140,21 +140,22 @@ if __name__ == '__main__':
     else:
         df = pd.DataFrame(columns=["ID"])
 
-    if "ID" in df.columns:
-        df = df.set_index("ID")  
-    else:
-        df = pd.DataFrame(index=test_ids)
+    pred = np.array(pred)
 
-    df.index.name = "ID"
+    # 安全检查
+    if len(pred) != len(test_data):
+        logger.error(f"Prediction length {len(pred)} does not match test data length {len(test_data)}")
+        raise ValueError("Mismatch between predictions and test data")
 
-    pred = np.array(pred) 
-    if len(pred) != len(test_ids):
-        logger.error(f"Prediction length {len(pred)} does not match test ID length {len(test_ids)}")
-        raise ValueError("Mismatch between predictions and test IDs")
+    # 构建带 ID 和预测结果的 dataframe
+    result_df = pd.DataFrame({
+        "ID": [item["id"] for item in test_data],
+        pred_col_name: pred
+    })
 
-    new_df = pd.DataFrame({pred_col_name: pred}, index=test_ids)
-    df[pred_col_name] = new_df[pred_col_name]
-    df = df.reindex(test_ids)
-    df.to_csv(csv_file)
+    # 按顺序输出，ID 可重复
+    result_df.to_csv(csv_file, index=False)
+    logger.info(f"Testing complete. Results saved to: {csv_file}. Shape={result_df.shape}")
+
 
     logger.info(f"Testing complete. Results saved to: {csv_file}.")
