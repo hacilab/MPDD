@@ -142,20 +142,29 @@ if __name__ == '__main__':
 
     pred = np.array(pred)
 
-    # 安全检查
     if len(pred) != len(test_data):
         logger.error(f"Prediction length {len(pred)} does not match test data length {len(test_data)}")
         raise ValueError("Mismatch between predictions and test data")
 
-    # 构建带 ID 和预测结果的 dataframe
+    # zelin: ID 直接使用 audio_feature_path 去除 .npy 后缀
+    id_list = [item["audio_feature_path"].replace(".npy", "") for item in test_data]
+
+    # 构建预测结果 DataFrame
     result_df = pd.DataFrame({
-        "ID": [item["id"] for item in test_data],
+        "ID": id_list,
         pred_col_name: pred
     })
 
-    # 按顺序输出，ID 可重复
-    result_df.to_csv(csv_file, index=False)
-    logger.info(f"Testing complete. Results saved to: {csv_file}. Shape={result_df.shape}")
+    # 如果已有 CSV 文件，按 ID 合并；否则新建
+    if os.path.exists(csv_file):
+        existing_df = pd.read_csv(csv_file)
 
+        # 合并已有 CSV 和本轮结果（保留所有 ID，自动对齐列）
+        merged_df = pd.merge(existing_df, result_df, on="ID", how="outer")
+    else:
+        merged_df = result_df
 
-    logger.info(f"Testing complete. Results saved to: {csv_file}.")
+    # 保存更新后的结果（覆盖写入，但保留所有旧列 + 本轮预测列）
+    merged_df.to_csv(csv_file, index=False)
+    logger.info(f"Testing complete. Results saved to: {csv_file}. Shape={merged_df.shape}")
+
