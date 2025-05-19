@@ -1,3 +1,9 @@
+################################################################################################################
+# NOTE:                                                                                                        #
+# The variable `big5_scores` used in this script corresponds to the field `big5_traits` in actual use.         # 
+# Please replace `big5_scores` with `big5_traits` when running this script on our data.                       #
+################################################################################################################
+
 import os
 os.environ["HF_ENDPOINT"]="https://hf-mirror.com"
 
