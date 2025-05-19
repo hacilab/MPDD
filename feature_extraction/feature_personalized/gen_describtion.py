@@ -19,7 +19,7 @@ def generate_patient_prompt(patient_data):
     Generate a structured prompt for personalized description based on patient data.
     """
     # Extract relevant information
-    big5_scores = patient_data.get("big5_scores", {})
+    big5_scores = patient_data.get("big5_traits", {})
     age = patient_data.get("age", "unknown")
     gender = patient_data.get("gender", "unknown")
     native_place = patient_data.get("native_place", "unknown")
