@@ -25,6 +25,13 @@ The metrics reported are weighted/unweighted F1-score (W_F1/U_F1) and weighted/u
 | 5s     | Binary    | opensmile     | resnet         | 62.11 / 62.11     | 62.12 / 62.12         | 60.02 / 60.02      | 60.61 / 60.61          |
 | 5s     | Ternary   | mfcc          | densenet       | 48.18 / 41.31     | 41.71 / 50.00         | 42.82 / 39.38      | 41.29 / 42.42          |
 
+
+# Evaluation site (the annotation for test-set is not public avaliable, please use this site to evaluate your model):
+[Track 1](https://codalab.lisn.upsaclay.fr/competitions/23192) : https://codalab.lisn.upsaclay.fr/competitions/23192
+
+[Track 2](https://codalab.lisn.upsaclay.fr/competitions/23193) :  https://codalab.lisn.upsaclay.fr/competitions/23193
+
+
 # Environment
 
     python 3.10.0
