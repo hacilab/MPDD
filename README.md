@@ -1,5 +1,3 @@
-# MPDD Baseline Code
-The baseline system provided for the MM 2025 MPDD Challenge serves as a starting point for participants to develop their solutions for the Multimodal Personalized Depression Detection tasks. The baseline system is designed to be straightforward yet effective, providing participants with a solid foundation upon which they can build and improve. 
 
 # Environment
 
